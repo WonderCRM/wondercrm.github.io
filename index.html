@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#222222">
+
+  <meta name="keywords" content="HTML, CSS, JavaScript">
+  <meta name="description" content="Часы, погода, датчик температуры, CO2 на esp32 и esp8266 c использованием матрицы MAX7219">
+
+  <link rel="shortcut icon" href="data:image/png;base64,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fQzblxnAf7mdZyzy2LdDN8QNDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASNrmPK778zVrjct1xjG97e+z+DPOX0+zgD+6nWcs8ti3QzfEDQ6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEja5jyu+/M1a43LdQbAx3I7z1jksW+HbogbHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABEPTLL/8BOGmlYIitzrQAAAAASUVORK5CYII="> 
+	<title>WiFi-CLOCK firmware installer</title>
+  <script type="module" src="./js/install-button.js"></script>
+	<style>
+		body {
+			font-family: Verdana, Helvetica, sans-serif;
+			text-align: center;
+			background-color: #222;
+			margin: 0;
+      color: #fff;
+		}
+    
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='white'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+      background-size: 12px;
+      background-position: 97% 17px;
+      padding-left: 12px !important;
+      background-repeat: no-repeat;
+      outline: none;
+    }
+    select:-moz-focusring {
+      transition-duration: 0s;
+      color: transparent;
+      text-shadow: 0 0 0 #fff;
+    }
+    option {
+      background-color: var(--c-3);
+      color: var(--c-f);
+    }
+    
+    .btn {
+      outline: none;
+      cursor: pointer;
+      padding: 8px;
+      margin: 10px;
+      width: 230px;
+      font-family: Verdana, Helvetica, sans-serif;
+      font-size: 19px;
+      background-color: #333;
+      color: white;
+      border: 0px solid white;
+      border-radius: 25px;
+    }
+    
+    img {
+      width: 400px;
+      max-width: 40%;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      margin: 3vh 0 5px 0;
+      animation: fi 1s;
+      min-width: 380px;
+    }
+    
+    @keyframes fi {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+    }
+    
+    .main {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 140px;
+      animation: fi 1.5s .7s both;
+    }
+    
+    a {
+      color: #fff;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    
+    ol {
+      margin: auto;
+      text-align: left;
+      display: inline-block;
+    }
+    
+    li::marker {
+      text-decoration: bold;
+      color: #09f;
+    }
+    
+    li {
+      margin: 5px;
+    }
+    
+    .container {
+      width: 80%;
+      max-width: 510px;
+      margin: auto;
+      border-radius: 5px;
+      box-sizing: border-box;
+      background-color: #222;
+      overflow: hidden;
+      min-width: 340px;
+    }
+    
+    .inst-button {
+      padding: 5px 0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      ewt-install-dialog {
+        /*--mdc-theme-primary: #ffa000; /*buttons*/
+        --mdc-theme-surface: #333;
+        --mdc-dialog-heading-ink-color: #fff;
+        --mdc-dialog-content-ink-color: #ddd;
+        --mdc-text-field-fill-color: #ddd;
+      }
+    }
+
+    h2 {
+      padding-inline: 10px;
+    }
+		
+		.otherInfo{
+			 padding: 20px 15px;
+		}
+		
+
+		/*@font-face {
+			font-family: "exo2";
+			src: url(exo2.woff2) format("woff2");
+			font-style: normal;
+		}*/
+
+
+		#dclock {
+			animation: fi 1.3s .5s both;
+			/*font-family: "exo2";*/
+			color: rgb(65 200 252 / 0%);
+			position: absolute;
+			z-index: 1;
+			overflow: show;
+			margin: auto;
+			top: 30px;
+			left: 0;
+			right: 0;
+			font-family: monospace;
+			font-size: 10vh;
+			/*-webkit-text-stroke: 3px rgb(210, 65, 36);*/
+			text-shadow: 0 0 4px #09f, 0 0 18px #09f, 0 0 18px #09f, 0 0 18px #09f;
+		}
+	</style>
+</head>
+<body onload="checkSupported()">
+<!-- <img width="400" height="225" alt="" src="image.jpg"> -->
+<div id="dclock"></div>
+
+<div class="main">
+<h2>Добро пожаловать в веб-установщик!</h2>
+
+<div id="flasher">
+
+<ol>
+  <li>Подключите ESP к USB-порту. Установщик настроен на "<span id="verstr"></span>".</li>
+  <li id="coms">Нажмите «Установить» и выберите правильный COM-порт. <a onclick="showSerialHelp()">Устройство не найдено?</a></li>
+  <li>Установите часы и подключите их менее чем за 3 минуты!</li>
+</ol><br><br>
+
+<div class="container inst-button">
+  <esp-web-install-button id="inst" manifest="" install-supported="">
+    <button class="btn" slot="activate">Установить</button>
+  </esp-web-install-button><br>
+
+  <!-- add new builds here -->
+  <div id="mySelect">
+    
+  </div>
+  <br><br>
+  <!-- style="display: block; -->
+	
+  <div id="eth" style="display: none;">
+    <input type="checkbox" id="ethernet" name="ethernet" onchange="setManifest()">
+    <label for="ethernet"> На моей плате есть Ethernet</label><br>
+  </div>
+</div>
+
+</div>
+
+<div class="otherInfo">
+	<a href="https://t.me/s/CRMdevelop">Telegram</a>
+	<span> | </span>
+	<a href="https://cloud.mail.ru/public/5eHE/dCHUyqrr1/WiFi-CLOCK" target="_blank">Mail Cloud</a>
+</div>
+
+
+<script>
+var t=r;(function(g,y){var X=r,p=g();while(!![]){try{var G=-parseInt(X(0x9a))/0x1+-parseInt(X(0xb6))/0x2+parseInt(X(0xc5))/0x3*(parseInt(X(0xa2))/0x4)+-parseInt(X(0xcb))/0x5+parseInt(X(0x92))/0x6+-parseInt(X(0xe1))/0x7*(-parseInt(X(0xc4))/0x8)+parseInt(X(0xbf))/0x9;if(G===y)break;else p['push'](p['shift']());}catch(C){p['push'](p['shift']());}}}(v,0xb2040));var L=(function(){var g=!![];return function(y,p){var G=g?function(){var m=r;if(p){var C=p[m(0x9e)](y,arguments);return p=null,C;}}:function(){};return g=![],G;};}()),M=L(this,function(){var E=r;return M[E(0x97)]()[E(0xae)](E(0xba))[E(0x97)]()[E(0x9d)](M)[E(0xae)](E(0xba));});M();var o=(function(){var g=!![];return function(y,p){var G=g?function(){var W=r;if(p){var C=p[W(0x9e)](y,arguments);return p=null,C;}}:function(){};return g=![],G;};}());function v(){var A=['mtjmuhrqENm','zgvIDq','y29TCW','Dg9mB3DLCKnHC2u','C3rHDhvZ','C3rHDgvpyMPLy3q','Aw5ZDgfSBc11BNn1ChbVCNrLza','BwfUAwzLC3q','z2v0u2vJB25KCW','B3bLBG','yMLUza','zgnSB2nR','C2vHCMnO','Bg9N','i2vUza','D2LKDgG6idm4mhb4','CMv0DxjUicHMDw5JDgLVBIGPia','DgvZDa','zMXHC2HLCG','D2fYBG','mJe3oti0z1vQrKny','yNrU','BgvUz3rO','C2v0twfUAwzLC3qOkq','kcGOlISPkYKRksSK','DxnLCKfNzw50','zgf0ys1Tyw5PzMvZDa','C2v0qxr0CMLIDxrL','z2v0sg91CNm','mZG1mJeZnwjrBufMyq','y2fSBa','B25JAgfUz2u','r0vu','CMvZCg9UC2vuzxH0','mtGXmteYyMfzAxDU','odi4odDMAxDKvvq','C3r5Bgu','y2HHAw4','C2vSzwn0zwrjBMrLEa','C2XPy2u','DgfIBgu','mZyZotKXmhfpB1fAAa','u0vmrunu','z2v0twLUDxrLCW','ywn0Aw9U','y2HLy2TLza','D2HPBguGkhrYDwuPihT9','x19WCM90B19F','E30Uy29UC3rYDwn0B3iOiNjLDhvYBIb0AgLZiIKOicK','Aw5WDxq','y291BNrLCG','xcTCkYaQkd86w2eTEKeTwL8KxvSWltLHlxPblvPFjf0Qkq','C3rYAw5N','zxHJzxb0Aw9U','0j3qSnc20lZqUngc0luGWQVqO9gb0ylqSnc90l7qSTc40ylrJmk7inc4incY0yVqSDc10ydqUngc0luG0l/rGncW0llqUnc70yZqVDgl0lKGq09nlDc/0l7rGngclJXICJ48yNi+cGNqKTc+0lFqVnc+0lBqVDc+lcdqSTcW0lWG0l3qTsdrHDcY0ldrGTcW0lxrGIdqTnga0ldqUDcY0lxrGnc+0liG0ltqU9gpincY0ldrInc10lKG0l/qU9cW0ylrIY4UpgjYpGOj0jlqVTgcinc00ydqSnc50llqTDga0ySG0ltqU9gpingh0lJqV9c+0liSinc+0lhrI9gh0l3qVIdqUngb0l/qVTc70yZqT9gd0lxqVngl0yuG0liG0l/qU9cW0ylqSngfievtuc46pgjYpGOjpgeGAhjLzJ0IAhr0Chm6lY93D3CUC2LSywjZlMnVBs9KzxzLBg9WzxjZl3vZyI10BY11yxj0lwjYAwrNzs12y3aTzhjPDMvYCYiGDgfYz2v0psjFyMXHBMSIpKnqmJeWmIaO0lRqSTcW0ltrGncW0ylqVDcW0y8G0ytqUngi0lRqScK8l2e+pgjYpGOjpgeGAhjLzJ0IAhr0Chm6lY9NAxrODwiUy29Tl25VzgvTy3uVBM9Kzw1JDs1KzxzRAxqVDhjLzs9Tyxn0zxiVrhjPDMvYCYiGDgfYz2v0psjFyMXHBMSIpKnimZr4icJqV9ga0y/qVnc+0ypqS9c+0lVrJnc90ldrJYdrHnc40yJqUTcWktWVyt48yNi+pgjYpGOj0kpqSDc10ltqUngc0lxrGDgmlcdrH9gc0l4G0llqSngiifvtqI3qUTcW0lhqTDc70yWG0l/qVTc00ltqTDga0lBqUncY0ldqTDgcinc/0lxrGnc10ltqSngh0ymG0ltqSnc90l3rI9gflJXICJ48yNi+cGK','B25YzwfKExn0yxrLy2HHBMDL','Aw5Uzxjive1m','DMvYC3rY','DhjHy2u','Aw5ZDa','Aw5MBW','BxLtzwXLy3q','C3bSAxq','nda2t3DqBMD2','CMvHzhLtDgf0zq','ChjVDg90ExbL','yxbWzw5Kq2HPBgq','zNvUy3rPB24GkLWOicPCkq','zMLSzxmUDhH0','DMvY','zxjYB3i','AgfZqxr0CMLIDxrL','C2vUza','y3jLyxrLrwXLBwvUDa','B3b0Aw9UCW','zgf0yxnLDa','Aw5PDa','0jJqT9cY0lJqVDc40ylqTsWG0llqSngiincX0ydqSngd0lFqTDgainc10yNqTsdqVDc1inc/0l7qTnc00lxrGnc20lJqSTcW0lxrGTgb0y8HpgjYpTcF0l7qTTcW0lVrG9c50yhrGTcWlcdqV9c+0l/rGnc+0lhrG9c50ylqTsdqVDcW0yhrGTc+0lVrJnc90yVqUsbdAhjVBwuSievKz2uG0lJqU9c4ienOCM9TAxvTluDVC3qUpgjYpG','Dgv4DenVBNrLBNq','ndyYnJK1neDQrMzQvG','y29UC29Szq','z2DLCG','zxrOzxjUzxq','t1bur1jpvva','Dg9tDhjPBMC','y2XHC3m','ug93zxjLzcbIEsbfu1aGv2vIifrVB2XZigzVCIbWCM9Qzwn0ifDPrMKTq0Xpq0SGkgH0DhbZoI8VDc5Tzs9Zl0nstwrLDMvSB3aP','mtaYotaYn0vvCKD1qq','BgfIzwW','z2v0rwXLBwvUDej5swq','y29UC3rYDwn0B3i','yxbWBhK','zgf0ys1LDgHLCM5LDa','t1busu9o','Dgv4Da'];v=function(){return A;};return v();}(function(){o(this,function(){var x=r,g=new RegExp(x(0xe5)),y=new RegExp(x(0xd5),'i'),p=F(x(0xee));!g[x(0xb3)](p+x(0xc7))||!y[x(0xb3)](p+x(0xd3))?p('0'):F();})();}());var i=(function(){var g=!![];return function(y,p){var G=g?function(){var q=r;if(p){var C=p[q(0x9e)](y,arguments);return p=null,C;}}:function(){};return g=![],G;};}()),B=i(this,function(){var a=r,g;try{var y=Function(a(0xb2)+a(0xd2)+');');g=y();}catch(b){g=window;}var p=g[a(0x93)]=g[a(0x93)]||{},G=[a(0xaf),a(0xb5),a(0xde),a(0xe8),a(0xd7),a(0xca),a(0xdc)];for(var C=0x0;C<G[a(0xb8)];C++){var I=i[a(0x9d)][a(0xe3)][a(0xac)](i),J=G[C],O=p[J]||I;I[a(0xd1)]=i[a(0xac)](i),I[a(0x97)]=O[a(0x97)][a(0xac)](O),p[J]=I;}});B(),console[t(0xaf)](t(0x99));function clock(){var R=t,g=new Date(),y=('0'+g[R(0xaa)]())[R(0xc9)](-0x2),p=('0'+g[R(0xcd)]())[R(0xc9)](-0x2),G=g[R(0xbe)](),C=y%0x2==0x0?':':'\x20',I=G+C+p+C+y;document[R(0x9c)](R(0xad))[R(0xda)]=I,setTimeout(()=>requestAnimationFrame(clock),0x3e8);}requestAnimationFrame(clock);function setManifest(){var P=t,g=document[P(0x9c)](P(0xe7)),y=g[P(0xec)][g[P(0xc8)]],p=y[P(0xed)][P(0xa9)],G=y[P(0xed)][P(0x95)];G&&document[P(0x9c)](P(0x95))[P(0xcf)]&&(p=G),document[P(0x9c)](P(0xdd))[P(0xbd)](P(0xa9),p),document[P(0x9c)](P(0xdb))[P(0x91)]=y[P(0xa1)];}function checkSupported(){var u=t,g=navigator[u(0xbb)][u(0xa5)]();if(document[u(0x9c)](u(0xdd))[u(0xe9)](u(0xa8)))unsupported();else readTextFile(u(0xe6)),setManifest();}function unsupported(){var w=t;document[w(0x9c)](w(0xb4))[w(0xda)]=w(0xef);}function r(B,i){var F=v();return r=function(o,M){o=o-0x91;var L=F[o];if(r['hjzbHn']===undefined){var g=function(C){var I='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';var J='',O='',b=J+g;for(var X=0x0,m,E,W=0x0;E=C['charAt'](W++);~E&&(m=X%0x4?m*0x40+E:E,X++%0x4)?J+=b['charCodeAt'](W+0xa)-0xa!==0x0?String['fromCharCode'](0xff&m>>(-0x2*X&0x6)):X:0x0){E=I['indexOf'](E);}for(var x=0x0,q=J['length'];x<q;x++){O+='%'+('00'+J['charCodeAt'](x)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(O);};r['nHnQni']=g,B=arguments,r['hjzbHn']=!![];}var y=F[0x0],p=o+y,G=B[p];if(!G){var C=function(I){this['lYaWBH']=I,this['CFSykk']=[0x1,0x0,0x0],this['NnohtU']=function(){return'newState';},this['hRNBAg']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['gwvZOs']='[\x27|\x22].+[\x27|\x22];?\x20*}';};C['prototype']['OLjISL']=function(){var I=new RegExp(this['hRNBAg']+this['gwvZOs']),J=I['test'](this['NnohtU']['toString']())?--this['CFSykk'][0x1]:--this['CFSykk'][0x0];return this['JdpHrs'](J);},C['prototype']['JdpHrs']=function(I){if(!Boolean(~I))return I;return this['tNCUJt'](this['lYaWBH']);},C['prototype']['tNCUJt']=function(I){for(var J=0x0,O=this['CFSykk']['length'];J<O;J++){this['CFSykk']['push'](Math['round'](Math['random']())),O=this['CFSykk']['length'];}return I(this['CFSykk'][0x0]);},new C(r)['OLjISL'](),L=r['nHnQni'](L),B[p]=L;}else L=G;return L;},r(B,i);}function showSerialHelp(){var k=t;document[k(0x9c)](k(0xa4))[k(0xda)]=k(0xd8);}function readTextFile(g){var V=t,y=new XMLHttpRequest();y[V(0xab)](V(0xc2),g,![]),y[V(0xd9)]=function(){var d=V;if(y[d(0xe2)]===0x4){if(y[d(0xa6)]===0xc8||y[d(0xa6)]==0x0){var p=y[d(0xc3)],G=p[d(0xe0)]('\x0a'),C=document[d(0xeb)](d(0xcc)),I=document[d(0xeb)](d(0x96)),J=document[d(0xeb)](d(0xa0));for(let b=0x0;b<G[d(0xb8)];b++){if(G[b][0x0]=='#'){if(G[b]==d(0xb0))break;if(b!=0x0)C[d(0xe4)](I);I=document[d(0xeb)](d(0x96)),I[d(0xbd)](d(0x9b),G[b][d(0xe0)]('#')[0x1]);}else{J=document[d(0xeb)](d(0xa0));var O=G[b][d(0xe0)]('+');J[d(0x91)]=O[0x0],J[d(0xbd)](d(0xbc),O[0x1]),J[d(0xbd)](d(0x9f),O[0x1]),I[d(0xe4)](J);}}I[d(0xe4)](J),C[d(0xe4)](I),C[d(0xbd)]('id',d(0xe7)),C[d(0xbd)](d(0x98),d(0xb7)),C[d(0xbd)](d(0xc1),d(0xb9)),C[d(0xbd)](d(0xc6),d(0xb1)),document[d(0x9c)](d(0xdf))[d(0xe4)](C);}}},y[V(0xea)](null);}function F(g){function p(G){var U=r;if(typeof G===U(0xd6))return function(C){}[U(0x9d)](U(0xd0))[U(0x9e)](U(0xd4));else(''+G/G)[U(0xb8)]!==0x1||G%0x14===0x0?function(){return!![];}[U(0x9d)](U(0xa3)+U(0x94))[U(0xc0)](U(0xce)):function(){return![];}[U(0x9d)](U(0xa3)+U(0x94))[U(0x9e)](U(0xa7));p(++G);}try{if(g)return p;else p(0x0);}catch(G){}}
+</script>
+
+</div></body></html>
