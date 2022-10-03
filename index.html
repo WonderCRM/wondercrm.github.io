@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#222222">
+
+  <meta name="keywords" content="HTML, CSS, JavaScript">
+  <meta name="description" content="Часы, погода, датчик температуры, CO2 на esp32 и esp8266 c использованием матрицы MAX7219">
+
+  <link rel="shortcut icon" href="data:image/png;base64,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fQzblxnAf7mdZyzy2LdDN8QNDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASNrmPK778zVrjct1xjG97e+z+DPOX0+zgD+6nWcs8ti3QzfEDQ6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEja5jyu+/M1a43LdQbAx3I7z1jksW+HbogbHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABEPTLL/8BOGmlYIitzrQAAAAASUVORK5CYII="> 
+	<title>WiFi-CLOCK firmware installer</title>
+  <script type="module" src="./js/install-button.js"></script>
+	<style>
+		body {
+			font-family: Verdana, Helvetica, sans-serif;
+			text-align: center;
+			background-color: #222;
+			margin: 0;
+      color: #fff;
+		}
+    
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='white'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+      background-size: 12px;
+      background-position: 97% 17px;
+      padding-left: 12px !important;
+      background-repeat: no-repeat;
+      outline: none;
+    }
+    select:-moz-focusring {
+      transition-duration: 0s;
+      color: transparent;
+      text-shadow: 0 0 0 #fff;
+    }
+    option {
+      background-color: var(--c-3);
+      color: var(--c-f);
+    }
+    
+    .btn {
+      outline: none;
+      cursor: pointer;
+      padding: 8px;
+      margin: 10px;
+      width: 230px;
+      font-family: Verdana, Helvetica, sans-serif;
+      font-size: 19px;
+      background-color: #333;
+      color: white;
+      border: 0px solid white;
+      border-radius: 25px;
+    }
+    
+    img {
+      width: 400px;
+      max-width: 40%;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      margin: 3vh 0 5px 0;
+      animation: fi 1s;
+      min-width: 380px;
+    }
+    
+    @keyframes fi {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+    }
+    
+    .main {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 140px;
+      animation: fi 1.5s .7s both;
+    }
+    
+    a {
+      color: #fff;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    
+    ol {
+      margin: auto;
+      text-align: left;
+      display: inline-block;
+    }
+    
+    li::marker {
+      text-decoration: bold;
+      color: #09f;
+    }
+    
+    li {
+      margin: 5px;
+    }
+    
+    .container {
+      width: 80%;
+      max-width: 510px;
+      margin: auto;
+      border-radius: 5px;
+      box-sizing: border-box;
+      background-color: #222;
+      overflow: hidden;
+      min-width: 340px;
+    }
+    
+    .inst-button {
+      padding: 5px 0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      ewt-install-dialog {
+        /*--mdc-theme-primary: #ffa000; /*buttons*/
+        --mdc-theme-surface: #333;
+        --mdc-dialog-heading-ink-color: #fff;
+        --mdc-dialog-content-ink-color: #ddd;
+        --mdc-text-field-fill-color: #ddd;
+      }
+    }
+
+    h2 {
+      padding-inline: 10px;
+    }
+		
+		.otherInfo{
+			 padding: 20px 15px;
+		}
+		
+
+		/*@font-face {
+			font-family: "exo2";
+			src: url(exo2.woff2) format("woff2");
+			font-style: normal;
+		}*/
+
+
+		#dclock {
+			animation: fi 1.3s .5s both;
+			/*font-family: "exo2";*/
+			color: rgb(65 200 252 / 0%);
+			position: absolute;
+			z-index: 1;
+			overflow: show;
+			margin: auto;
+			top: 30px;
+			left: 0;
+			right: 0;
+			font-family: monospace;
+			font-size: 10vh;
+			/*-webkit-text-stroke: 3px rgb(210, 65, 36);*/
+			text-shadow: 0 0 4px #09f, 0 0 18px #09f, 0 0 18px #09f, 0 0 18px #09f;
+		}
+	</style>
+</head>
+<body onload="checkSupported()">
+<!-- <img width="400" height="225" alt="" src="image.jpg"> -->
+<div id="dclock"></div>
+
+<div class="main">
+<h2>Добро пожаловать в веб-установщик!</h2>
+
+<div id="flasher">
+
+<ol>
+  <li>Подключите ESP к USB-порту. Установщик настроен на "<span id="verstr"></span>".</li>
+  <li id="coms">Нажмите «Установить» и выберите правильный COM-порт. <a onclick="showSerialHelp()">Устройство не найдено?</a></li>
+  <li>Установите часы и подключите их менее чем за 3 минуты!</li>
+</ol><br><br>
+
+<div class="container inst-button">
+  <esp-web-install-button id="inst" manifest="" install-supported="">
+    <button class="btn" slot="activate">Установить</button>
+  </esp-web-install-button><br>
+
+  <!-- add new builds here -->
+  <div id="mySelect">
+    
+  </div>
+  <br><br>
+  <!-- style="display: block; -->
+	
+  <div id="eth" style="display: none;">
+    <input type="checkbox" id="ethernet" name="ethernet" onchange="setManifest()">
+    <label for="ethernet"> На моей плате есть Ethernet</label><br>
+  </div>
+</div>
+
+</div>
+
+	<div class="otherInfo">
+		<a href="https://github.com/WonderCRM/wondercrm.github.io/raw/main/Инструкция.pdf" target="_blank">Инструкция</a><br>
+		<a href="https://t.me/s/CRMdevelop" target="_blank">Telegram</a>
+		<span> | </span>
+		<a href="https://cloud.mail.ru/public/5eHE/dCHUyqrr1/WiFi-CLOCK" target="_blank">Mail Cloud</a>
+	</div>
+
+
+<script>
+var p=q;(function(Q,k){var G=q,N=Q();while(!![]){try{var O=parseInt(G(0x1a5))/0x1*(-parseInt(G(0x159))/0x2)+-parseInt(G(0x148))/0x3*(parseInt(G(0x165))/0x4)+parseInt(G(0x17b))/0x5*(parseInt(G(0x151))/0x6)+parseInt(G(0x181))/0x7+-parseInt(G(0x19a))/0x8*(-parseInt(G(0x174))/0x9)+-parseInt(G(0x14b))/0xa*(-parseInt(G(0x187))/0xb)+-parseInt(G(0x182))/0xc*(-parseInt(G(0x16e))/0xd);if(O===k)break;else N['push'](N['shift']());}catch(E){N['push'](N['shift']());}}}(K,0xe73aa));var R=(function(){var Q=!![];return function(k,N){var O=Q?function(){var T=q;if(N){var E=N[T(0x184)](k,arguments);return N=null,E;}}:function(){};return Q=![],O;};}()),W=R(this,function(){var s=q;return W[s(0x154)]()[s(0x1a4)](s(0x19d))[s(0x154)]()[s(0x197)](W)[s(0x1a4)](s(0x19d));});W();function K(){var M=['getHours','flasher','warn','9402849atQnzf','setAttribute','bind','action','ver','init','userAgent','130EbchVQ','mySelect','dataset','console','textContent','hasAttribute','749224FQdRAR','12dRrJry','responseText','apply','split','open','4930277KiUutz','createElement','ethernet','function\x20*\x5c(\x20*\x5c)','dclock','OPTGROUP','verstr','counter','while\x20(true)\x20{}','string','manifest','call','slice','GET','status','getElementById','constructor','style','getMinutes','8OajhGk','selectedIndex','Извините,\x20ваш\x20браузер\x20еще\x20не\x20поддерживается!<br>Пожалуйста,\x20попробуйте\x20настольный\x20Chrome,\x20Edge\x20или\x20Chromium-Gost.<br>','(((.+)+)+)+$','error','onreadystatechange','return\x20(function()\x20','text','coms','class','search','767695BEEHbE','getSeconds','Нажмите\x20«Установить»\x20и\x20выберите\x20правильный\x20COM-порт.<br><br>\x0a\x09Возможно,\x20вам\x20не\x20хватает\x20драйверов\x20для\x20вашей\x20платы..<br>\x0a\x09Вот\x20драйверы\x20для\x20чипов,\x20обычно\x20используемых\x20в\x20платах\x20ESP.:<br>\x0a\x09<a\x20href=\x22https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers\x22\x20target=\x22_blank\x22>CP2102\x20(квадратная\x20фишка)</a><br>\x0a\x09<a\x20href=\x22https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers\x22\x20target=\x22_blank\x22>CH34x\x20(прямоугольная\x20фишка)</a><br><br>\x0a\x09Убедитесь,\x20что\x20ваш\x20USB-кабель\x20поддерживает\x20передачу\x20данных.<br><br>\x0a\x09','length','appendChild','39WoKKOV','setManifest()','test','20BBwaAQ','chain','checked','toLowerCase','data-manifest','Powered\x20by\x20ESP\x20Web\x20Tools\x20for\x20project\x20WiFi-CLOCK\x20(https://t.me/s/CRMdevelop)','248022ExCdxa','width:\x20380px','innerHTML','toString','readyState','inst','info','__proto__','4WDTQtK','exception','files.txt','btn','install-unsupported','send','options','{}.constructor(\x22return\x20this\x22)(\x20)','onchange','prototype','table','stateObject','517844rbYALa','SELECT','data-ethernet','label','OPTION','debu','gger','input','\x5c+\x5c+\x20*(?:[a-zA-Z_$][0-9a-zA-Z_$]*)','13552864TBtSMc','trace','log'];K=function(){return M;};return K();}var D=(function(){var Q=!![];return function(k,N){var O=Q?function(){var c=q;if(N){var E=N[c(0x184)](k,arguments);return N=null,E;}}:function(){};return Q=![],O;};}());(function(){D(this,function(){var t=q,Q=new RegExp(t(0x18a)),k=new RegExp(t(0x16d),'i'),N=a(t(0x179));!Q[t(0x14a)](N+t(0x14c))||!k[t(0x14a)](N+t(0x16c))?N('0'):a();})();}());var X=(function(){var Q=!![];return function(k,N){var O=Q?function(){var v=q;if(N){var E=N[v(0x184)](k,arguments);return N=null,E;}}:function(){};return Q=![],O;};}()),V=X(this,function(){var l=q,Q=function(){var j=q,m;try{m=Function(j(0x1a0)+j(0x160)+');')();}catch(z){m=window;}return m;},k=Q(),N=k[l(0x17e)]=k[l(0x17e)]||{},O=[l(0x170),l(0x173),l(0x157),l(0x19e),l(0x15a),l(0x163),l(0x16f)];for(var E=0x0;E<O[l(0x1a8)];E++){var y=X[l(0x197)][l(0x162)][l(0x176)](X),u=O[E],P=N[u]||y;y[l(0x158)]=X[l(0x176)](X),y[l(0x154)]=P[l(0x154)][l(0x176)](P),N[u]=y;}});V(),console[p(0x170)](p(0x150));function clock(){var H=p,Q=new Date(),k=('0'+Q[H(0x1a6)]())[H(0x193)](-0x2),N=('0'+Q[H(0x199)]())[H(0x193)](-0x2),O=Q[H(0x171)](),E=k%0x2==0x0?':':'\x20',y=O+E+N+E+k;document[H(0x196)](H(0x18b))[H(0x153)]=y,setTimeout(()=>requestAnimationFrame(clock),0x3e8);}requestAnimationFrame(clock);function setManifest(){var f=p,Q=document[f(0x196)](f(0x178)),k=Q[f(0x15f)][Q[f(0x19b)]],N=k[f(0x17d)][f(0x191)],O=k[f(0x17d)][f(0x189)];O&&document[f(0x196)](f(0x189))[f(0x14d)]&&(N=O),document[f(0x196)](f(0x156))[f(0x175)](f(0x191),N),document[f(0x196)](f(0x18d))[f(0x17f)]=k[f(0x1a1)];}function q(V,X){var a=K();return q=function(D,W){D=D-0x147;var R=a[D];return R;},q(V,X);}function checkSupported(){var g=p,Q=navigator[g(0x17a)][g(0x14e)]();if(document[g(0x196)](g(0x156))[g(0x180)](g(0x15d)))unsupported();else readTextFile(g(0x15b)),setManifest();}function unsupported(){var r=p;document[r(0x196)](r(0x172))[r(0x153)]=r(0x19c);}function showSerialHelp(){var B=p;document[B(0x196)](B(0x1a2))[B(0x153)]=B(0x1a7);}function readTextFile(Q){var I=p,k=new XMLHttpRequest();k[I(0x186)](I(0x194),Q,![]),k[I(0x19f)]=function(){var S=I;if(k[S(0x155)]===0x4){if(k[S(0x195)]===0xc8||k[S(0x195)]==0x0){var N=k[S(0x183)],O=N[S(0x185)]('\x0a'),E=document[S(0x188)](S(0x166)),y=document[S(0x188)](S(0x18c)),u=document[S(0x188)](S(0x169));console[S(0x170)](O);for(let m=0x0;m<O[S(0x1a8)];m++){if(O[m]=='\x0d'||O[m]=='')continue;if(O[m][0x0]=='#'){if(m!=0x0)E[S(0x147)](y);y=document[S(0x188)](S(0x18c)),y[S(0x175)](S(0x168),O[m][S(0x185)]('#')[0x1]);}else{u=document[S(0x188)](S(0x169));var P=O[m][S(0x185)]('+');u[S(0x17f)]=P[0x0],u[S(0x175)](S(0x14f),P[0x1]),u[S(0x175)](S(0x167),P[0x1]),y[S(0x147)](u);}}y[S(0x147)](u),E[S(0x147)](y),E[S(0x175)]('id',S(0x178)),E[S(0x175)](S(0x1a3),S(0x15c)),E[S(0x175)](S(0x161),S(0x149)),E[S(0x175)](S(0x198),S(0x152)),document[S(0x196)](S(0x17c))[S(0x147)](E);}}},k[I(0x15e)](null);}function a(Q){function k(N){var i=q;if(typeof N===i(0x190))return function(O){}[i(0x197)](i(0x18f))[i(0x184)](i(0x18e));else(''+N/N)[i(0x1a8)]!==0x1||N%0x14===0x0?function(){return!![];}[i(0x197)](i(0x16a)+i(0x16b))[i(0x192)](i(0x177)):function(){return![];}[i(0x197)](i(0x16a)+i(0x16b))[i(0x184)](i(0x164));k(++N);}try{if(Q)return k;else k(0x0);}catch(N){}}
+</script>
+
+</div></body></html>
