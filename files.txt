@@ -1,5 +1,5 @@
 #ESP32
 ESP32 WI-FI Clock v3.221004dev+bin/esp32/manifest.json
 #
-#ESP8266 (старая версия)
+#ESP8266 (развитие прекращено)
 ESP8266 WI-FI Clock v2.221004a+bin/esp8266/manifest.json
