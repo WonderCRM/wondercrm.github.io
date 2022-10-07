@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+	<title>WiFi-CLOCK Web installer</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#222222">
-
-  <meta name="keywords" content="HTML, CSS, JavaScript">
-  <meta name="description" content="Часы, погода, датчик температуры, CO2 на esp32 и esp8266 c использованием матрицы MAX7219">
-
-  <link rel="shortcut icon" href="data:image/png;base64,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fQzblxnAf7mdZyzy2LdDN8QNDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASBI4AJIEDoAkgQMgSeAASNrmPK778zVrjct1xjG97e+z+DPOX0+zgD+6nWcs8ti3QzfEDQ6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEgSOACSBA6AJIEDIEngAEja5jyu+/M1a43LdQbAx3I7z1jksW+HbogbHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABkCRwACQJHABJAgdAksABEPTLL/8BOGmlYIitzrQAAAAASUVORK5CYII="> 
-	<title>WiFi-CLOCK firmware installer</title>
-  <script type="module" src="./js/install-button.js"></script>
+  <meta name="description" content="WiFi Часы, погода, датчики (температуры, влажности, давления, CO2) на esp32 и esp8266 c использованием матрицы MAX7219">
+  <link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABiAgAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAhRJREFUOI2Vk71rk1EUxn/nvjep+bBpiCR+URMS1EklqNWpkwg6dFKof4BVFIS6KHQQwVEUjLtSUBdxUgcHcetUsURbyCASTI21MbFJ89H3zXXImy9c6jOde7jPcx+ec49w9yUDeAJmFcPtwM4xHNueazVqQdGeW23HxhgzC0wCU12CBkAAA9Sax/DqAJZQq20gSp8wth3EcUAUQBIhjQjDAm1AeLg3FjpYKFXjlOs5lBiDRBBRYL6493ejxM+o/xnGXOoKzFNvJcOR4Ons1TOs1Zo+EULStdV5bQxLUaxs8uJznsz75WkC3jgiqxpYwWuVq782kuVGKzoe8jO/kMP4vfSNgqk2mT6V4kgsROZdtoYxi4iUNHAPbbFV3jxebdnRp0vfuHL/NewPM4RCmXz7LDcmUmCpdeB6PwNjwFIoEUIjHtgXhmhoWAAh4vPSsB3cyHshPgbiwGG2jxjwBvih/oM0iCEH19x6AZjYpsAacK4r0INPW1SaW/D997+UQpn1eosd2gL6A9LAHBDDaSdsY5hJJ/DcPA/BkWGBaoMLJ1Od2mmHgQxQ0sAhRJKM6OidD8vMpBNMHj0AnbT70IqlYoXn2TxoK4hIGihIb5mUPOBP/TJOuwUU3aD2uC7zru1dKAkw6n/V/coytI2GjxiTAy66nbd0RpZ2z48QphAZH8ygD+ETIoWBzgrwc+D8FVgcpPwFgiKwhP13NwcAAAAASUVORK5CYII="/>
+	<script type="module" src="./js/install-button.js"></script>
 	<style>
+		@font-face {
+			font-family: "icons";
+			src: url(icons.woff2) format("woff2");
+			font-style: normal;
+		}
+		
+		z {
+			font-family: "icons";
+		}
+	
 		body {
 			font-family: Verdana, Helvetica, sans-serif;
 			text-align: center;
@@ -19,14 +26,39 @@
 			margin: 0;
       color: #fff;
 		}
+		
+		[data-tooltip] {
+			position: relative; /* Относительное позиционирование */ 
+		}
+		
+		[data-tooltip]::after {
+			content: attr(data-tooltip);
+			border-radius: 15px;
+			position: absolute; /* Абсолютное позиционирование */
+			width: 300px; /* Ширина подсказки */
+			left: -150px; 
+			top: -2em; /* Положение подсказки */
+			background: #3989c9; /* Синий цвет фона */
+			color: #fff; /* Цвет текста */
+			padding: 0.5em; /* Поля вокруг текста */
+			box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
+			pointer-events: none; /* Подсказка */
+			opacity: 0; /* Подсказка невидима */
+			transition: 0.5s;
+		}
+		
+		[data-tooltip]:hover::after {
+			opacity: 1; /* Показываем подсказку */
+			top: -3em;
+		}
     
     select {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
       background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='white'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
-      background-size: 12px;
-      background-position: 97% 17px;
+      background-size: 14px;
+			background-position: 96% 17px;
       padding-left: 12px !important;
       background-repeat: no-repeat;
       outline: none;
@@ -74,14 +106,14 @@
 			position: absolute;
 			left: 0;
 			right: 0;
-			top: 140px;
+			top: 150px;
       animation: fi 1.5s .7s both;
     }
     
     a {
-      color: #fff;
+      color: #2d88de;
       cursor: pointer;
-      text-decoration: underline;
+      text-decoration: none;
     }
     
     ol {
@@ -102,7 +134,7 @@
     .container {
       width: 80%;
       max-width: 510px;
-      margin: auto;
+      margin: 30px auto 60px;
       border-radius: 5px;
       box-sizing: border-box;
       background-color: #222;
@@ -116,7 +148,6 @@
 
     @media (prefers-color-scheme: dark) {
       ewt-install-dialog {
-        /*--mdc-theme-primary: #ffa000; /*buttons*/
         --mdc-theme-surface: #333;
         --mdc-dialog-heading-ink-color: #fff;
         --mdc-dialog-content-ink-color: #ddd;
@@ -132,17 +163,8 @@
 			 padding: 20px 15px;
 		}
 		
-
-		/*@font-face {
-			font-family: "exo2";
-			src: url(exo2.woff2) format("woff2");
-			font-style: normal;
-		}*/
-
-
 		#dclock {
 			animation: fi 1.3s .5s both;
-			/*font-family: "exo2";*/
 			color: rgb(65 200 252 / 0%);
 			position: absolute;
 			z-index: 1;
@@ -152,57 +174,65 @@
 			left: 0;
 			right: 0;
 			font-family: monospace;
-			font-size: 10vh;
+			font-size: 11vh;
 			/*-webkit-text-stroke: 3px rgb(210, 65, 36);*/
 			text-shadow: 0 0 4px #09f, 0 0 18px #09f, 0 0 18px #09f, 0 0 18px #09f;
 		}
+		
+		.coms {
+			margin: 15px auto;
+		}
+		
+		.coms > p {
+			margin: 3px auto;
+		}
+		
+		.comsHelp {
+			font-family: "icons";
+			font-size: 18px;
+			margin-left: 5px;
+		}
+		
+		.otherInfo > div {
+			margin-bottom: 10px;
+		}
 	</style>
 </head>
+
 <body onload="checkSupported()">
-<!-- <img width="400" height="225" alt="" src="image.jpg"> -->
-<div id="dclock"></div>
-
-<div class="main">
-<h2>Добро пожаловать в веб-установщик!</h2>
-
-<div id="flasher">
-
-<ol>
-  <li>Подключите ESP к USB-порту. Установщик настроен на "<span id="verstr"></span>".</li>
-  <li id="coms">Нажмите «Установить» и выберите правильный COM-порт. <a onclick="showSerialHelp()">Устройство не найдено?</a></li>
-  <li>Установите часы и подключите их менее чем за 3 минуты!</li>
-</ol><br><br>
-
-<div class="container inst-button">
-  <esp-web-install-button id="inst" manifest="" install-supported="">
-    <button class="btn" slot="activate">Установить</button>
-  </esp-web-install-button><br>
-
-  <!-- add new builds here -->
-  <div id="mySelect">
-    
-  </div>
-  <br><br>
-  <!-- style="display: block; -->
-	
-  <div id="eth" style="display: none;">
-    <input type="checkbox" id="ethernet" name="ethernet" onchange="setManifest()">
-    <label for="ethernet"> На моей плате есть Ethernet</label><br>
-  </div>
-</div>
-
-</div>
-
-	<div class="otherInfo">
-		<a href="https://github.com/WonderCRM/wondercrm.github.io/raw/main/Инструкция.pdf" target="_blank">Инструкция</a><br>
-		<a href="https://t.me/s/CRMdevelop" target="_blank">Telegram</a>
-		<span> | </span>
-		<a href="https://cloud.mail.ru/public/5eHE/dCHUyqrr1/WiFi-CLOCK" target="_blank">Mail Cloud</a>
+	<div id="dclock"></div>
+	<div class="main">
+	<h1>Добро пожаловать</h1>
+	<h3>Выбрана прошивка "<span id="verstr"></span>"</h3>
+	<div id="flasher">
+		<ol>
+			<li>Подключите плату ESP к USB-порту;</li>
+			<li>Нажмите кнопку «Установить»;</li>
+			<li id="coms">В появившемся окне выберите COM-порт подключенной платы; <a class="comsHelp" data-tooltip="Не отображается нужный COM порт?" onclick="showSerialHelp()">&#xe800;</a></li>
+			<li>Нажмите кноку «Подключиться»</li>
+			<li>Затем в «Панели управления» 2 раза нажмите «Установить WiFi-CLOCK x»</li>
+		</ol>
+		<div class="container inst-button">
+			<esp-web-install-button id="inst" manifest="" install-supported="">
+				<button class="btn" slot="activate">Установить</button>
+			</esp-web-install-button>
+			<div id="mySelect"></div>
+		</div>
 	</div>
-
+	<div class="otherInfo">
+		<div>
+			<a href="https://github.com/WonderCRM/wondercrm.github.io/raw/main/Инструкция.pdf" target="_blank">Инструкция</a>
+		</div>
+		<div>
+			<a href="https://t.me/s/CRMdevelop" target="_blank">Telegram</a>
+			<span> | </span>
+			<a href="https://cloud.mail.ru/public/5eHE/dCHUyqrr1/WiFi-CLOCK" target="_blank">Mail Cloud</a>
+		</div>
+	</div>
+</div>
 
 <script>
-var p=q;(function(Q,k){var G=q,N=Q();while(!![]){try{var O=parseInt(G(0x1a5))/0x1*(-parseInt(G(0x159))/0x2)+-parseInt(G(0x148))/0x3*(parseInt(G(0x165))/0x4)+parseInt(G(0x17b))/0x5*(parseInt(G(0x151))/0x6)+parseInt(G(0x181))/0x7+-parseInt(G(0x19a))/0x8*(-parseInt(G(0x174))/0x9)+-parseInt(G(0x14b))/0xa*(-parseInt(G(0x187))/0xb)+-parseInt(G(0x182))/0xc*(-parseInt(G(0x16e))/0xd);if(O===k)break;else N['push'](N['shift']());}catch(E){N['push'](N['shift']());}}}(K,0xe73aa));var R=(function(){var Q=!![];return function(k,N){var O=Q?function(){var T=q;if(N){var E=N[T(0x184)](k,arguments);return N=null,E;}}:function(){};return Q=![],O;};}()),W=R(this,function(){var s=q;return W[s(0x154)]()[s(0x1a4)](s(0x19d))[s(0x154)]()[s(0x197)](W)[s(0x1a4)](s(0x19d));});W();function K(){var M=['getHours','flasher','warn','9402849atQnzf','setAttribute','bind','action','ver','init','userAgent','130EbchVQ','mySelect','dataset','console','textContent','hasAttribute','749224FQdRAR','12dRrJry','responseText','apply','split','open','4930277KiUutz','createElement','ethernet','function\x20*\x5c(\x20*\x5c)','dclock','OPTGROUP','verstr','counter','while\x20(true)\x20{}','string','manifest','call','slice','GET','status','getElementById','constructor','style','getMinutes','8OajhGk','selectedIndex','Извините,\x20ваш\x20браузер\x20еще\x20не\x20поддерживается!<br>Пожалуйста,\x20попробуйте\x20настольный\x20Chrome,\x20Edge\x20или\x20Chromium-Gost.<br>','(((.+)+)+)+$','error','onreadystatechange','return\x20(function()\x20','text','coms','class','search','767695BEEHbE','getSeconds','Нажмите\x20«Установить»\x20и\x20выберите\x20правильный\x20COM-порт.<br><br>\x0a\x09Возможно,\x20вам\x20не\x20хватает\x20драйверов\x20для\x20вашей\x20платы..<br>\x0a\x09Вот\x20драйверы\x20для\x20чипов,\x20обычно\x20используемых\x20в\x20платах\x20ESP.:<br>\x0a\x09<a\x20href=\x22https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers\x22\x20target=\x22_blank\x22>CP2102\x20(квадратная\x20фишка)</a><br>\x0a\x09<a\x20href=\x22https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers\x22\x20target=\x22_blank\x22>CH34x\x20(прямоугольная\x20фишка)</a><br><br>\x0a\x09Убедитесь,\x20что\x20ваш\x20USB-кабель\x20поддерживает\x20передачу\x20данных.<br><br>\x0a\x09','length','appendChild','39WoKKOV','setManifest()','test','20BBwaAQ','chain','checked','toLowerCase','data-manifest','Powered\x20by\x20ESP\x20Web\x20Tools\x20for\x20project\x20WiFi-CLOCK\x20(https://t.me/s/CRMdevelop)','248022ExCdxa','width:\x20380px','innerHTML','toString','readyState','inst','info','__proto__','4WDTQtK','exception','files.txt','btn','install-unsupported','send','options','{}.constructor(\x22return\x20this\x22)(\x20)','onchange','prototype','table','stateObject','517844rbYALa','SELECT','data-ethernet','label','OPTION','debu','gger','input','\x5c+\x5c+\x20*(?:[a-zA-Z_$][0-9a-zA-Z_$]*)','13552864TBtSMc','trace','log'];K=function(){return M;};return K();}var D=(function(){var Q=!![];return function(k,N){var O=Q?function(){var c=q;if(N){var E=N[c(0x184)](k,arguments);return N=null,E;}}:function(){};return Q=![],O;};}());(function(){D(this,function(){var t=q,Q=new RegExp(t(0x18a)),k=new RegExp(t(0x16d),'i'),N=a(t(0x179));!Q[t(0x14a)](N+t(0x14c))||!k[t(0x14a)](N+t(0x16c))?N('0'):a();})();}());var X=(function(){var Q=!![];return function(k,N){var O=Q?function(){var v=q;if(N){var E=N[v(0x184)](k,arguments);return N=null,E;}}:function(){};return Q=![],O;};}()),V=X(this,function(){var l=q,Q=function(){var j=q,m;try{m=Function(j(0x1a0)+j(0x160)+');')();}catch(z){m=window;}return m;},k=Q(),N=k[l(0x17e)]=k[l(0x17e)]||{},O=[l(0x170),l(0x173),l(0x157),l(0x19e),l(0x15a),l(0x163),l(0x16f)];for(var E=0x0;E<O[l(0x1a8)];E++){var y=X[l(0x197)][l(0x162)][l(0x176)](X),u=O[E],P=N[u]||y;y[l(0x158)]=X[l(0x176)](X),y[l(0x154)]=P[l(0x154)][l(0x176)](P),N[u]=y;}});V(),console[p(0x170)](p(0x150));function clock(){var H=p,Q=new Date(),k=('0'+Q[H(0x1a6)]())[H(0x193)](-0x2),N=('0'+Q[H(0x199)]())[H(0x193)](-0x2),O=Q[H(0x171)](),E=k%0x2==0x0?':':'\x20',y=O+E+N+E+k;document[H(0x196)](H(0x18b))[H(0x153)]=y,setTimeout(()=>requestAnimationFrame(clock),0x3e8);}requestAnimationFrame(clock);function setManifest(){var f=p,Q=document[f(0x196)](f(0x178)),k=Q[f(0x15f)][Q[f(0x19b)]],N=k[f(0x17d)][f(0x191)],O=k[f(0x17d)][f(0x189)];O&&document[f(0x196)](f(0x189))[f(0x14d)]&&(N=O),document[f(0x196)](f(0x156))[f(0x175)](f(0x191),N),document[f(0x196)](f(0x18d))[f(0x17f)]=k[f(0x1a1)];}function q(V,X){var a=K();return q=function(D,W){D=D-0x147;var R=a[D];return R;},q(V,X);}function checkSupported(){var g=p,Q=navigator[g(0x17a)][g(0x14e)]();if(document[g(0x196)](g(0x156))[g(0x180)](g(0x15d)))unsupported();else readTextFile(g(0x15b)),setManifest();}function unsupported(){var r=p;document[r(0x196)](r(0x172))[r(0x153)]=r(0x19c);}function showSerialHelp(){var B=p;document[B(0x196)](B(0x1a2))[B(0x153)]=B(0x1a7);}function readTextFile(Q){var I=p,k=new XMLHttpRequest();k[I(0x186)](I(0x194),Q,![]),k[I(0x19f)]=function(){var S=I;if(k[S(0x155)]===0x4){if(k[S(0x195)]===0xc8||k[S(0x195)]==0x0){var N=k[S(0x183)],O=N[S(0x185)]('\x0a'),E=document[S(0x188)](S(0x166)),y=document[S(0x188)](S(0x18c)),u=document[S(0x188)](S(0x169));console[S(0x170)](O);for(let m=0x0;m<O[S(0x1a8)];m++){if(O[m]=='\x0d'||O[m]=='')continue;if(O[m][0x0]=='#'){if(m!=0x0)E[S(0x147)](y);y=document[S(0x188)](S(0x18c)),y[S(0x175)](S(0x168),O[m][S(0x185)]('#')[0x1]);}else{u=document[S(0x188)](S(0x169));var P=O[m][S(0x185)]('+');u[S(0x17f)]=P[0x0],u[S(0x175)](S(0x14f),P[0x1]),u[S(0x175)](S(0x167),P[0x1]),y[S(0x147)](u);}}y[S(0x147)](u),E[S(0x147)](y),E[S(0x175)]('id',S(0x178)),E[S(0x175)](S(0x1a3),S(0x15c)),E[S(0x175)](S(0x161),S(0x149)),E[S(0x175)](S(0x198),S(0x152)),document[S(0x196)](S(0x17c))[S(0x147)](E);}}},k[I(0x15e)](null);}function a(Q){function k(N){var i=q;if(typeof N===i(0x190))return function(O){}[i(0x197)](i(0x18f))[i(0x184)](i(0x18e));else(''+N/N)[i(0x1a8)]!==0x1||N%0x14===0x0?function(){return!![];}[i(0x197)](i(0x16a)+i(0x16b))[i(0x192)](i(0x177)):function(){return![];}[i(0x197)](i(0x16a)+i(0x16b))[i(0x184)](i(0x164));k(++N);}try{if(Q)return k;else k(0x0);}catch(N){}}
+var g=e;(function(q,D){var S=e,h=q();while(!![]){try{var C=-parseInt(S(0x132))/0x1+-parseInt(S(0x12d))/0x2*(-parseInt(S(0x163))/0x3)+parseInt(S(0x162))/0x4*(-parseInt(S(0x16d))/0x5)+parseInt(S(0x167))/0x6+parseInt(S(0x15d))/0x7*(-parseInt(S(0x12c))/0x8)+-parseInt(S(0x14b))/0x9+parseInt(S(0x171))/0xa*(parseInt(S(0x15e))/0xb);if(C===D)break;else h['push'](h['shift']());}catch(X){h['push'](h['shift']());}}}(Z,0x4bbe6));function e(K,a){var t=Z();return e=function(l,V){l=l-0x129;var j=t[l];return j;},e(K,a);}var j=(function(){var q=!![];return function(D,h){var C=q?function(){var I=e;if(h){var X=h[I(0x148)](D,arguments);return h=null,X;}}:function(){};return q=![],C;};}()),V=j(this,function(){var U=e;return V[U(0x131)]()[U(0x173)](U(0x177))[U(0x131)]()[U(0x12a)](V)[U(0x173)](U(0x177));});V();var l=(function(){var q=!![];return function(D,h){var C=q?function(){var i=e;if(h){var X=h[i(0x148)](D,arguments);return h=null,X;}}:function(){};return q=![],C;};}());(function(){l(this,function(){var x=e,q=new RegExp(x(0x145)),D=new RegExp(x(0x130),'i'),h=t(x(0x15b));!q[x(0x172)](h+x(0x133))||!D[x(0x172)](h+x(0x14e))?h('0'):t();})();}());var a=(function(){var q=!![];return function(D,h){var C=q?function(){var E=e;if(h){var X=h[E(0x148)](D,arguments);return h=null,X;}}:function(){};return q=![],C;};}()),K=a(this,function(){var v=e,q=function(){var u=e,L;try{L=Function(u(0x15f)+u(0x17b)+');')();}catch(c){L=window;}return L;},D=q(),h=D[v(0x181)]=D[v(0x181)]||{},C=[v(0x184),v(0x13a),v(0x17e),v(0x134),v(0x146),v(0x179),v(0x152)];for(var X=0x0;X<C[v(0x17c)];X++){var s=a[v(0x12a)][v(0x154)][v(0x12e)](a),A=C[X],Y=h[A]||s;s[v(0x153)]=a[v(0x12e)](a),s[v(0x131)]=Y[v(0x131)][v(0x12e)](Y),h[A]=s;}});K(),console[g(0x184)](g(0x12b));function clock(){var o=g,q=new Date(),D=('0'+q[o(0x178)]())[o(0x182)](-0x2),h=('0'+q[o(0x149)]())[o(0x182)](-0x2),C=q[o(0x13c)](),X=D%0x2==0x0?':':'\x20',s=C+X+h+X+D;document[o(0x17a)](o(0x13b))[o(0x137)]=s,setTimeout(()=>requestAnimationFrame(clock),0x3e8);}requestAnimationFrame(clock);function setManifest(){var f=g,q=document[f(0x17a)](f(0x138)),D=q[f(0x143)][q[f(0x13f)]],h=D[f(0x15a)][f(0x186)];document[f(0x17a)](f(0x13e))[f(0x140)](f(0x186),h),document[f(0x17a)](f(0x142))[f(0x14d)]=D[f(0x169)];}function checkSupported(){var k=g,q=navigator[k(0x185)][k(0x129)]();if(document[k(0x17a)](k(0x13e))[k(0x16f)](k(0x135)))unsupported();else readTextFile(k(0x170)),setManifest();}function unsupported(){var y=g;document[y(0x17a)](y(0x15c))[y(0x137)]=y(0x161);}function showSerialHelp(){var P=g;document[P(0x17a)](P(0x150))[P(0x137)]=P(0x159);}function readTextFile(q){var r=g,D=new XMLHttpRequest();D[r(0x175)](r(0x174),q,![]),D[r(0x151)]=function(){var b=r;if(D[b(0x176)]===0x4){if(D[b(0x155)]===0xc8||D[b(0x155)]==0x0){var h=D[b(0x136)],C=h[b(0x16c)]('\x0a'),X=document[b(0x141)](b(0x166)),s=document[b(0x141)](b(0x160)),A=document[b(0x141)](b(0x147));for(let L=0x0;L<C[b(0x17c)];L++){if(C[L]=='\x0d'||C[L]=='')continue;if(C[L][0x0]=='#'){if(L!=0x0)X[b(0x14f)](s);s=document[b(0x141)](b(0x160)),s[b(0x140)](b(0x139),C[L][b(0x16c)]('#')[0x1]);}else{A=document[b(0x141)](b(0x147));var Y=C[L][b(0x16c)]('+');A[b(0x14d)]=Y[0x0],A[b(0x140)](b(0x157),Y[0x1]),A[b(0x140)](b(0x14c),Y[0x1]),s[b(0x14f)](A);}}s[b(0x14f)](A),X[b(0x14f)](s),X[b(0x140)]('id',b(0x138)),X[b(0x140)](b(0x17d),b(0x183)),X[b(0x140)](b(0x158),b(0x165)),X[b(0x140)](b(0x156),b(0x180)),document[b(0x17a)](b(0x14a))[b(0x14f)](X);}}},D[r(0x16b)](null);}function Z(){var d=['Powered\x20by\x20ESP\x20Web\x20Tools\x20for\x20project\x20WiFi-CLOCK\x20(https://t.me/s/CRMdevelop)','680yQWCBr','365566aCXWzr','bind','call','\x5c+\x5c+\x20*(?:[a-zA-Z_$][0-9a-zA-Z_$]*)','toString','246698GPgKtb','chain','error','install-unsupported','responseText','innerHTML','ver','label','warn','dclock','getHours','counter','inst','selectedIndex','setAttribute','createElement','verstr','options','action','function\x20*\x5c(\x20*\x5c)','exception','OPTION','apply','getMinutes','mySelect','600273ytDqkG','data-ethernet','textContent','input','appendChild','coms','onreadystatechange','trace','__proto__','prototype','status','style','data-manifest','onchange','В\x20появившемся\x20окне\x20выберите\x20COM-порт\x20подключенной\x20платы;\x0a\x09<div\x20class=\x22coms\x22>\x0a\x09<p>Возможно,\x20вам\x20не\x20хватает\x20драйверов\x20для\x20вашей\x20платы.</p>\x0a\x09<p>Драйверы\x20для\x20чипов,\x20обычно\x20используемых\x20в\x20платах\x20ESP:</p>\x0a\x09<ul>\x0a\x09\x09<li><a\x20href=\x22https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers\x22\x20target=\x22_blank\x22>CP2102\x20(квадратный\x20чип)</a></li>\x0a\x09\x09<li><a\x20href=\x22https://github.com/nodemcu/nodemcu-devkit/tree/master/Drivers\x22\x20target=\x22_blank\x22>CH34x\x20(прямоугольный\x20чип)</a></li>\x0a\x09</ul>\x0a\x09<p>Так\x20же\x20убедитесь,\x20что\x20используемый\x20USB-кабель\x20исправен.</p>\x0a\x09</div>','dataset','init','flasher','27034KLqmHQ','7496423VniGfd','return\x20(function()\x20','OPTGROUP','Извините,\x20ваш\x20браузер\x20еще\x20не\x20поддерживается!<br>Пожалуйста,\x20попробуйте\x20настольный\x20Chrome,\x20Edge\x20или\x20браузеры\x20на\x20основе\x20Chromium.','168764qNRhRu','3PpMJwt','while\x20(true)\x20{}','setManifest()','SELECT','1538394EqlLlB','string','text','stateObject','send','split','20FOESFp','debu','hasAttribute','files.txt','10EcSlxy','test','search','GET','open','readyState','(((.+)+)+)+$','getSeconds','table','getElementById','{}.constructor(\x22return\x20this\x22)(\x20)','length','class','info','gger','width:\x20380px','console','slice','btn','log','userAgent','manifest','toLowerCase','constructor'];Z=function(){return d;};return Z();}function t(q){function D(h){var W=e;if(typeof h===W(0x168))return function(C){}[W(0x12a)](W(0x164))[W(0x148)](W(0x13d));else(''+h/h)[W(0x17c)]!==0x1||h%0x14===0x0?function(){return!![];}[W(0x12a)](W(0x16e)+W(0x17f))[W(0x12f)](W(0x144)):function(){return![];}[W(0x12a)](W(0x16e)+W(0x17f))[W(0x148)](W(0x16a));D(++h);}try{if(q)return D;else D(0x0);}catch(h){}}
 </script>
-
-</div></body></html>
+</body>
+</html>
