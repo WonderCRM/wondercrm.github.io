@@ -73,7 +73,7 @@ h1, h3 {
 }
 .radios {
 	max-width: 360px;
-	margin: 40px auto;
+	margin: 20px auto 40px;
 	text-align: center;
 }
 
