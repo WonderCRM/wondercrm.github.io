@@ -6,7 +6,7 @@ class e extends HTMLElement {
         if (this.renderRoot) return;
         if (this.renderRoot = this.attachShadow({
                 mode: "open"
-            }), !e.isSupported || !e.isAllowed) return this.toggleAttribute("install-unsupported", !0), void(this.renderRoot.innerHTML = e.isAllowed ? '<slot class="unsupported" name="unsupported">Ваш браузер не поддерживает установку прошивки WiFi-CLOCK. Используйте Google Chrome или Microsoft Edge.</slot>' : '<slot class="unsupported" name="not-allowed">Установка прошивки WiFi-CLOCK через Web установщик, доступна только по протоколу HTTPS.</slot>');
+            }), !e.isSupported || !e.isAllowed) return this.toggleAttribute("install-unsupported", !0), void(this.renderRoot.innerHTML = e.isAllowed ? '<slot style="color:red" name="unsupported">Ваш браузер не поддерживает установку прошивки WiFi-CLOCK. Используйте Google Chrome или Microsoft Edge.</slot>' : '<slot style="color:red" name="not-allowed">Установка прошивки WiFi-CLOCK через Web установщик, доступна только по протоколу HTTPS.</slot>');
         this.toggleAttribute("install-supported", !0), this.addEventListener("mouseover", e.preload);
         const n = document.createElement("slot");
         n.addEventListener("click", (async e => {
