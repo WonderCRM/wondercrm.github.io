@@ -1,4 +1,0 @@
-#ESP32
-ESP32 WI-FI CLOCK v3+bin/esp32/manifest.json
-#ESP8266
-ESP8266 WI-FI CLOCK v2+bin/esp8266/manifest.json
