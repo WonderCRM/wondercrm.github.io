@@ -1,0 +1,179 @@
+@font-face {
+	font-family: "icons";
+	src: url(./icons.woff2) format("woff2");
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "exo2";
+	src: url(./exo2.woff2) format("woff2");
+	font-style: normal;
+}
+
+* {
+	font-family: "exo2";
+}
+
+body {
+	font-family: Verdana, Helvetica, sans-serif;
+	background-color: #222;
+	margin: 0;
+	text-align: center;
+	color: #fff;
+}
+
+[data-tooltip] {
+	position: relative; /* Относительное позиционирование */ 
+}
+[data-tooltip]::after {
+	content: attr(data-tooltip);
+	border-radius: 15px;
+	position: absolute; /* Абсолютное позиционирование */
+	width: 300px; /* Ширина подсказки */
+	left: -150px; 
+	top: -2em; /* Положение подсказки */
+	background: #3989c9; /* Синий цвет фона */
+	color: #fff; /* Цвет текста */
+	padding: 0.5em; /* Поля вокруг текста */
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
+	pointer-events: none; /* Подсказка */
+	opacity: 0; /* Подсказка невидима */
+	transition: 0.5s;
+}
+[data-tooltip]:hover::after {
+	opacity: 1; /* Показываем подсказку */
+	top: -3em;
+}
+
+.hh {
+	text-align: center;
+	margin: 15px auto 10px;
+	letter-spacing: 0.8em;
+}
+
+h1, h3 {
+	margin: 5px 0;
+}
+
+.hide {
+	display: none;
+}
+
+.content {
+	max-width: 700px;
+	position: relative;
+	left: 0;
+	right: 0;
+	top: 160px;
+	margin-inline: auto;
+	animation: fi 1.5s .7s both;
+	text-align: left;
+}
+.radios {
+	max-width: 360px;
+	margin: 40px auto;
+}
+
+z {
+	font-family: "icons";
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+.hidden {
+	display: none;
+}
+
+esp-web-install-button[install-unsupported] {
+	visibility: inherit;
+}
+
+a {
+	color: #2d88de;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+ol {
+	display: inline-block;
+	margin: 30px auto 10px;
+	text-align: left;
+	font-size: 18px;
+}
+
+li {
+	margin: 10px 0;
+}
+
+li::marker {
+	text-decoration: bold;
+	color: #09f;
+}
+
+.radios li {
+	list-style: none;
+	line-height: 2em;
+	font-size: 21px;
+}
+
+.radios li label{
+	cursor: pointer;
+}
+
+#esp32, #esp8266 {
+	margin-left: 10px;
+	color: rgb(65 200 252);
+}
+
+#dclock {
+	animation: fi 1.3s .5s both;
+	color: rgb(65 200 252 / 0%);
+	position: absolute;
+	z-index: 1;
+	overflow: show;
+	margin: auto;
+	top: 30px;
+	left: 0;
+	right: 0;
+	font-family: monospace;
+	font-size: 10vh;
+	text-shadow: 0 0 4px #09f, 0 0 18px #09f, 0 0 18px #09f, 0 0 18px #09f;
+}
+
+.drv {
+	text-align: center;
+	margin: 15px 0;
+}
+.drv a{
+	margin-inline: 10px;
+}
+
+.coms {
+	margin: 15px auto;
+}
+
+.coms > p {
+	margin: 3px auto;
+}
+
+.comsHelp {
+	font-family: "icons";
+	font-size: 18px;
+	margin-left: 5px;
+}
+
+.footer {
+	position: relative;
+	left: 0;
+	right: 0;
+	top: 170px;
+}
+.footer > div {
+	margin-bottom: 10px;
+}
+
+.footer a {
+	margin: 0 10px;
+}

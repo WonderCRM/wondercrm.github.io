@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<title>WiFi-CLOCK Web installer</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="theme-color" content="#222222">
+		<meta name="description" content="WiFi Часы, погода, датчики (температуры, влажности, давления, CO2) на esp32 и esp8266 c использованием матрицы MAX7219">
+		<link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABiAgAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAAQAAAAEAgGAAAAH/P/YQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAhRJREFUOI2Vk71rk1EUxn/nvjep+bBpiCR+URMS1EklqNWpkwg6dFKof4BVFIS6KHQQwVEUjLtSUBdxUgcHcetUsURbyCASTI21MbFJ89H3zXXImy9c6jOde7jPcx+ec49w9yUDeAJmFcPtwM4xHNueazVqQdGeW23HxhgzC0wCU12CBkAAA9Sax/DqAJZQq20gSp8wth3EcUAUQBIhjQjDAm1AeLg3FjpYKFXjlOs5lBiDRBBRYL6493ejxM+o/xnGXOoKzFNvJcOR4Ons1TOs1Zo+EULStdV5bQxLUaxs8uJznsz75WkC3jgiqxpYwWuVq782kuVGKzoe8jO/kMP4vfSNgqk2mT6V4kgsROZdtoYxi4iUNHAPbbFV3jxebdnRp0vfuHL/NewPM4RCmXz7LDcmUmCpdeB6PwNjwFIoEUIjHtgXhmhoWAAh4vPSsB3cyHshPgbiwGG2jxjwBvih/oM0iCEH19x6AZjYpsAacK4r0INPW1SaW/D997+UQpn1eosd2gL6A9LAHBDDaSdsY5hJJ/DcPA/BkWGBaoMLJ1Od2mmHgQxQ0sAhRJKM6OidD8vMpBNMHj0AnbT70IqlYoXn2TxoK4hIGihIb5mUPOBP/TJOuwUU3aD2uC7zru1dKAkw6n/V/coytI2GjxiTAy66nbd0RpZ2z48QphAZH8ygD+ETIoWBzgrwc+D8FVgcpPwFgiKwhP13NwcAAAAASUVORK5CYII="/>
+		<link rel="stylesheet" href="./css/style.css">  
+		<script type="module" src="./js/install-button.js"></script>
+  </head>
+  <body>
+		<div id="dclock"></div>
+    <div class="content">
+			<div class="hh">
+				<h1>WiFi-CLOCK</h1>
+				<h3>ВЕБ УСТАНОВЩИК</h3>
+			</div>
+			<ol>
+				<li>Выберите версию прощивки;</li>
+				<li>Подключите плату ESP к USB-порту;</li>
+				<li>Нажмите кнопку «Установить»;</li>
+				<li id="coms">В появившемся окне выберите COM-порт подключенной платы;<a class="comsHelp" data-tooltip="Не отображается нужный COM порт?">&#xe800;</a>
+					<div class="coms hide">
+						<p>Возможно, вам не хватает драйверов для вашей платы.</p>
+						<p>Драйверы для чипов, обычно используемых в платах ESP:</p>
+						<div class="drv">
+							<a href="./drivers/CH340G.rar" target="_blank">CH340G</a> |
+							<a href="./drivers/CH9102x.rar" target="_blank">CH9102x</a> |
+							<a href="./drivers/CP210x.rar" target="_blank">CP210x</a> |
+							<a href="./drivers/PL2303.rar" target="_blank">PL2303</a>
+						</div>
+						<p>Так же убедитесь, что используемый USB-кабель исправен.</p>
+					</div>
+				</li>
+				<li>Нажмите кноку «Подключиться»</li>
+				<li>Затем в «Панели управления» 2 раза нажмите «Установить WiFi-CLOCK x»</li>
+			</ol>
+			
+			<div class="radios">
+				<li><label><input type="radio" name="type" value="32" /> ESP32 - WI-FI CLOCK<span id="esp32"></span></label></li>
+				<li><label><input type="radio" name="type" value="8266" /> ESP8266 - WI-FI CLOCK<span id="esp8266"></span></label></li>
+				<p class="button-row" align="center">
+					<esp-web-install-button class="invisible"></esp-web-install-button>
+				</p>
+			</div>
+		</div>
+
+		<div class="footer">
+			<div>
+				<a href="https://github.com/WonderCRM/wondercrm.github.io/raw/main/Инструкция.pdf" target="_blank">Инструкция</a>
+			</div>
+			<div>
+				<a href="https://t.me/s/CRMdevelop" target="_blank">Telegram</a> |
+				<a href="https://cloud.mail.ru/public/5eHE/dCHUyqrr1/WiFi-CLOCK" target="_blank">Mail Cloud</a>
+			</div>
+		</div>
+
+    <script>
+			function clock() {
+				var now = new Date(),
+						secs = ('0' + now.getSeconds()).slice(-2),
+						mins = ('0' + now.getMinutes()).slice(-2),
+						hr = now.getHours(),
+						dd = (secs % 2 == 0 ? ":" : " ");
+				document.getElementById("dclock").innerHTML = hr + dd + mins + dd + secs;
+				setTimeout(()=> requestAnimationFrame(clock), 1000);
+			}
+			requestAnimationFrame(clock);
+		
+      document.querySelectorAll('input[name="type"]').forEach(radio =>
+        radio.addEventListener("change", () => {
+          const button = document.querySelector('esp-web-install-button');
+          button.manifest = `./manifest_${radio.value}.json`;
+          button.classList.remove('invisible');
+        }
+      ));
+			
+      document.getElementsByClassName("comsHelp")[0].addEventListener("click", () => {
+          document.getElementsByClassName('coms')[0].classList.remove('hide');
+        }
+      );
+			
+			function getVer(board) {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', `./manifest_${board}.json`, true);
+				xhr.onload = function() {
+					try {
+						var obj = JSON.parse(xhr.responseText);
+						document.getElementById(`esp${board}`).innerHTML = obj.version;
+					} catch (e) {
+						console.log(`GET request error for ESP${board} board software version`);
+					}
+				}
+				xhr.send(null);
+			}
+			
+			getVer("32");
+			getVer("8266");
+    </script>
+  </body>
+</html>

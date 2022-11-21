@@ -1,0 +1,12 @@
+{
+  "name": "WiFi-CLOCK 2",
+  "version": "2.221104a",
+  "builds": [
+    {
+      "chipFamily": "ESP8266",
+      "parts": [
+				{ "path": "fw/8266/0x0000_WiFi-CLOCK_2.bin", "offset": 0	}
+			]
+    }
+  ]
+}
