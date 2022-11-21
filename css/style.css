@@ -2,12 +2,14 @@
 	font-family: "icons";
 	src: url(./icons.woff2) format("woff2");
 	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: "exo2";
 	src: url(./exo2.woff2) format("woff2");
 	font-style: normal;
+	font-display: swap;
 }
 
 * {
