@@ -24,10 +24,6 @@ body {
 	color: #fff;
 }
 
-.unsupported {
-	color: red;
-} 
-
 [data-tooltip] {
 	position: relative; /* Относительное позиционирование */ 
 }
