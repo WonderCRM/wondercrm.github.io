@@ -180,7 +180,3 @@ li::marker {
 .footer a {
 	margin: 0 10px;
 }
-
-.footer a:hover {
-	box-shadow: rgb(45 136 222) 0px 0px 10px 3px;
-}
