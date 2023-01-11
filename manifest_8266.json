@@ -1,6 +1,6 @@
 {
   "name": "WiFi-CLOCK 2",
-  "version": "2.221228a",
+  "version": "2.230111a",
   "builds": [
     {
       "chipFamily": "ESP8266",
