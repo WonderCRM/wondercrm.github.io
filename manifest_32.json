@@ -1,6 +1,6 @@
 {
   "name": "WiFi-CLOCK 3",
-  "version": "3.250318",
+  "version": "3.250804",
   "new_install_prompt_erase": true,
   "builds": [
     {
@@ -14,3 +14,4 @@
     }
   ]
 }
+
