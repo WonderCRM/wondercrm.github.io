@@ -72,7 +72,7 @@ h1, h3 {
 	text-align: left;
 }
 .radios {
-	max-width: 360px;
+	max-width: 380px;
 	margin: 20px auto 40px;
 	text-align: center;
 }
@@ -165,6 +165,12 @@ li::marker {
 	font-family: "icons";
 	font-size: 18px;
 	margin-left: 5px;
+}
+
+.comsDwl {
+	font-family: "icons";
+	font-size: 18px;
+	margin-left: 10px;
 }
 
 .footer {
