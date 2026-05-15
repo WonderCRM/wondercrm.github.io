@@ -178,6 +178,7 @@ li::marker {
 	left: 0;
 	right: 0;
 	top: 170px;
+	padding: 0 0 20px 0;
 }
 .footer > div {
 	margin-bottom: 10px;
